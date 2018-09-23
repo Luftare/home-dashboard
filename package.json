@@ -1,14 +1,16 @@
 {
-    "name": "home-dashboard",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server/index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "prestart": "git pull && cd client && npm install && npm run build && cd ..",
-      "start": "node server/index.js"
-    },
-    "author": "LF",
-    "license": "ISC"
+  "name": "home-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "git pull && cd client && npm install && npm run build && cd ..",
+    "start": "node server/index.js"
+  },
+  "author": "LF",
+  "license": "ISC",
+  "dependencies": {
+    "styled-components": "^3.4.9"
   }
-  
+}
