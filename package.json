@@ -10,8 +10,5 @@
     "update": "cd client && npm run build && cd .. && git add . && git commit -m 'Add production' && git push"
   },
   "author": "LF",
-  "license": "ISC",
-  "dependencies": {
-    "styled-components": "^3.4.9"
-  }
+  "license": "ISC"
 }
