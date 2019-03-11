@@ -11,11 +11,7 @@ File path:
 
 File contents:
 node /home/pi/apps/home-dashboard/server/index.js &
-
-DISPLAY=:0 chromium-browser --start-fullscreen --disable-infobars &
-
 exit 0
-
 
 ### Start chromium on boot:
 
