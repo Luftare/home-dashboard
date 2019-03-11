@@ -1,11 +1,12 @@
 const google = require('googleapis').google;
 const fs = require('fs');
 
-const TOKEN_PATH = 'credentials/token.json';
+const TOKEN_PATH = __dirname + '/token.json';
 
 function getEvents() {
+
   return new Promise((res) => {
-    fs.readFile('credentials/credentials.json', (err, content) => {
+    fs.readFile(__dirname + '/credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       authorize(JSON.parse(content), listEvents.bind(this, res));
     });
