@@ -9,7 +9,6 @@ export default class Calendar extends Component {
     this.state = {
       upcomingEvents: [],
     };
-
   }
 
   componentDidMount() {

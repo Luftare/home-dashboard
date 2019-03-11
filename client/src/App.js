@@ -9,7 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   color: white;
-  
+
   > * {
     width: 50%;
   }
@@ -26,8 +26,8 @@ class App extends Component {
     return (
       <Container>
         <Calendar />
-        <Module>Jee!</Module>
-        <Module>Jee!</Module>
+        <Module>Jaahas!</Module>
+        <Module>Skulaa!</Module>
         <Module>Jee!</Module>
       </Container>
     );
