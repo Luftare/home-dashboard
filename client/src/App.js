@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import Calendar from './modules/calendar';
 
 const Container = styled.div`
+  display: flex;
   width: 100%;
   height: 100vh;
   color: white;
+  padding: 64px;
+  box-sizing: border-box;
 `;
 
 class App extends Component {
