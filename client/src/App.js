@@ -22,13 +22,28 @@ const Module = styled.div`
 `;
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      viewIndex: 0,
+    };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        viewIndex: this.state.viewIndex + 1,
+      });
+    }, 5000);
+  }
+
   render() {
     return (
       <Container>
         <Calendar />
         <Module>Jaahas!</Module>
         <Module>Skulaa!</Module>
-        <Module>Jee!</Module>
+        <Module>Jee! {this.state.viewIndex}</Module>
       </Container>
     );
   }
