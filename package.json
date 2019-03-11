@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "git pull && cd client && npm install && npm run build && cd ..",
     "start": "node server/index.js",
-    "update": "cd client && npm run build && cd .. && git add . && git commit -m 'Add production' && git push",
     "build": "cd client && npm run build",
-    "serve": "cd server && node ."
+    "serve": "cd server && node .",
+    "update": "cd client && npm run build && cd .. && npm run serve"
   },
   "author": "LF",
   "license": "ISC"
