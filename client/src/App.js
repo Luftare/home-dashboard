@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import Calendar from './modules/calendar';
+import Weather from './modules/weather';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: 100vh;
   color: white;
@@ -13,25 +16,11 @@ const Container = styled.div`
 `;
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      viewIndex: 0,
-    };
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        viewIndex: this.state.viewIndex + 1,
-      });
-    }, 5000);
-  }
-
   render() {
     return (
       <Container>
         <Calendar />
+        <Weather />
       </Container>
     );
   }
