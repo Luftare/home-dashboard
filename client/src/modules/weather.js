@@ -9,12 +9,9 @@ const Module = styled.div`
     border-collapse: separate;
     border-spacing: 0 16px;
 
-    tr {
-      width: ${props => Math.floor(100 / props.forecastCount)}%;
-      margin-top: 12px;
-    }
-
     td {
+      width: ${props =>
+        props.forecastCount === 0 ? 1 : Math.floor(100 / props.forecastCount)}%;
       text-align: center;
     }
   }

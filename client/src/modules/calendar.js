@@ -137,14 +137,35 @@ export default class Calendar extends Component {
       </EventItem>
     );
 
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+    const month = today.getMonth() + 1;
+    const weekDayName = weekdayIndexToString[today.getDay()];
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowMonth = tomorrow.getMonth() + 1;
+    const tomorrowDayOfMonth = tomorrow.getDate();
+    const tomorrowWeekDayName = weekdayIndexToString[tomorrow.getDay()];
+
     return (
       <Container {...this.props}>
         <EventGroup>
-          <h3>Tänään</h3>
+          <h3>
+            Tänään{' '}
+            <span style={{ fontSize: '30px', fontWeight: 500 }}>
+              {weekDayName} {dayOfMonth}.{month}.
+            </span>
+          </h3>
           {eventsToday.map(eventToDetails)}
         </EventGroup>
         <EventGroup>
-          <h3>Huomenna</h3>
+          <h3>
+            Huomenna{' '}
+            <span style={{ fontSize: '30px', fontWeight: 500 }}>
+              {tomorrowWeekDayName} {tomorrowDayOfMonth}.{tomorrowMonth}.
+            </span>
+          </h3>
           {eventsTomorrow.map(eventToDetails)}
         </EventGroup>
         <EventGroup>
