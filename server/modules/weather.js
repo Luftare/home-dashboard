@@ -17,10 +17,13 @@ function getWeatherData() {
       const times = $('.meteogram-times').find('span');
       const temperatures = $('.meteogram-temperatures').find('div');
       const descriptions = $('.meteogram-weather-symbols').find('div');
+      const rainPercentages = $(
+        '.meteogram-probabilities-of-precipitation'
+      ).find('span');
 
       times.each((i, el) => {
         if (i < hourLimit) {
-          weatherData[i].time = $(el).html();
+          weatherData[i].time = $(el).html() + '.00';
         }
       });
 
@@ -35,7 +38,20 @@ function getWeatherData() {
       descriptions.each((i, el) => {
         if (i < hourLimit) {
           const description = $(el).attr('title');
-          weatherData[i].description = description;
+          const trimmedDescription = description.split(',')[0];
+          weatherData[i].description = trimmedDescription;
+        }
+      });
+
+      rainPercentages.each((i, el) => {
+        if (i < hourLimit) {
+          const percentage = $(el).html();
+          const trimmedPercentage = percentage
+            .split('&#xA0;')
+            .join('')
+            .split('&lt; ')
+            .join('');
+          weatherData[i].rainLikelihood = trimmedPercentage;
         }
       });
 

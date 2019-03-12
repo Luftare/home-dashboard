@@ -68,7 +68,6 @@ export default class Calendar extends Component {
       .then(data => data.json())
       .then(data => {
         const upcomingEvents = data.map(e => {
-          console.log(e);
           const today = new Date();
           const date = new Date(e.start.dateTime);
           const endDate = new Date(e.end.dateTime);
