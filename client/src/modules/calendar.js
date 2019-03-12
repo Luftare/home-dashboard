@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 const EventGroup = styled.div`
   h3 {
     font-size: 42px;
@@ -40,7 +38,7 @@ function zeroPad(num) {
 function durationToText(duration) {
   const hour = 1000 * 60 * 60;
 
-  if(duration < hour * 1.6) {
+  if (duration < hour * 1.6) {
     return Math.round(duration / 1000 / 60) + ' min';
   }
 
@@ -51,7 +49,7 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      upcomingEvents: [],
+      upcomingEvents: []
     };
   }
 
@@ -70,14 +68,21 @@ export default class Calendar extends Component {
       .then(data => data.json())
       .then(data => {
         const upcomingEvents = data.map(e => {
+          console.log(e);
           const today = new Date();
           const date = new Date(e.start.dateTime);
           const endDate = new Date(e.end.dateTime);
           const dayOfMonth = date.getDate();
           const month = date.getMonth() + 1;
           const year = date.getFullYear();
-          const eventDayMidnightTime = date.getTime() - date.getSeconds() * 1000 - date.getMinutes() * 60 * 1000 - date.getHours() * 60 * 60 * 1000;
-          const daysLeft = Math.ceil((eventDayMidnightTime - today.getTime()) / 1000 / 60 / 60 / 24);
+          const eventDayMidnightTime =
+            date.getTime() -
+            date.getSeconds() * 1000 -
+            date.getMinutes() * 60 * 1000 -
+            date.getHours() * 60 * 60 * 1000;
+          const daysLeft = Math.ceil(
+            (eventDayMidnightTime - today.getTime()) / 1000 / 60 / 60 / 24
+          );
           const weekDayName = weekdayIndexToString[date.getDay()];
           const hours = date.getHours();
           const formattedHours = zeroPad(hours);
@@ -99,7 +104,7 @@ export default class Calendar extends Component {
             summary: e.summary,
             duration,
             durationText,
-            description: e.description,
+            description: e.description
           };
         });
 
@@ -109,20 +114,27 @@ export default class Calendar extends Component {
 
   render() {
     const eventsToday = this.state.upcomingEvents.filter(e => e.daysLeft === 0);
-    const eventsTomorrow = this.state.upcomingEvents.filter(e => e.daysLeft === 1);
+    const eventsTomorrow = this.state.upcomingEvents.filter(
+      e => e.daysLeft === 1
+    );
     const laterEvents = this.state.upcomingEvents.filter(e => e.daysLeft > 1);
 
     const eventToDetails = (e, i) => (
       <EventItem key={i}>
         <h4>{e.summary}</h4>
-        <span>klo {e.formattedHours}.{e.formattedMinutes}, {e.durationText}</span>
+        <span>
+          klo {e.formattedHours}.{e.formattedMinutes}, {e.durationText}
+        </span>
       </EventItem>
     );
 
     const eventToOverview = (e, i) => (
       <EventItem key={i}>
         <h4>{e.summary}</h4>
-        <span>{e.weekDayName} {e.dayOfMonth}.{e.month} klo  {e.formattedHours}.{e.formattedMinutes} ({e.daysLeft} päivää)</span>
+        <span>
+          {e.weekDayName} {e.dayOfMonth}.{e.month} klo {e.formattedHours}.
+          {e.formattedMinutes} ({e.daysLeft} päivää)
+        </span>
       </EventItem>
     );
 
@@ -141,6 +153,6 @@ export default class Calendar extends Component {
           {laterEvents.map(eventToOverview)}
         </EventGroup>
       </Container>
-    )
+    );
   }
 }

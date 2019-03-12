@@ -50,14 +50,31 @@ export default class Weather extends Component {
     return (
       <div {...this.props}>
         <Container>
+          {firstForecast && <Forecast>{firstForecast.time}.00</Forecast>}
+          {middleForecast && <Forecast>{middleForecast.time}.00</Forecast>}
+          {lastForecast && <Forecast>{lastForecast.time}.00</Forecast>}
+        </Container>
+        <Container>
           {this.state.forecasts.map((forecast, i) => (
             <Forecast key={i}>{forecast.temperature}</Forecast>
           ))}
         </Container>
         <Container>
-          {firstForecast && <Forecast>{firstForecast.time}:00</Forecast>}
-          {middleForecast && <Forecast>{middleForecast.time}:00</Forecast>}
-          {lastForecast && <Forecast>{lastForecast.time}:00</Forecast>}
+          {firstForecast && (
+            <Forecast style={{ width: '33%' }}>
+              {firstForecast.description}
+            </Forecast>
+          )}
+          {middleForecast && (
+            <Forecast style={{ width: '33%', textAlign: 'center' }}>
+              {middleForecast.description}
+            </Forecast>
+          )}
+          {lastForecast && (
+            <Forecast style={{ width: '33%', textAlign: 'right' }}>
+              {lastForecast.description}
+            </Forecast>
+          )}
         </Container>
       </div>
     );
