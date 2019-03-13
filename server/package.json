@@ -10,9 +10,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-boost": "^0.3.1",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-http": "^1.5.12",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
     "googleapis": "^27.0.0",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.3.0",
+    "react-apollo": "^2.5.2",
     "request": "^2.88.0"
   }
 }
