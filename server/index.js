@@ -1,5 +1,6 @@
 const getEvents = require('./modules/calendar.js');
 const getWeather = require('./modules/weather.js');
+const getTransportation = require('./modules/transportation.js');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -27,6 +28,11 @@ api.get('/calendar', (req, res) => {
 api.get('/weather', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   getWeather().then(weather => res.send(JSON.stringify(weather)));
+});
+
+api.get('/transportation', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  getTransportation().then(data => res.send(JSON.stringify(data)));
 });
 
 app.listen(port);
