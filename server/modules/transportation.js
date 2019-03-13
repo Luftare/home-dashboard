@@ -22,7 +22,17 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
   }),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'ignore'
+    },
+    query: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'all'
+    }
+  }
 });
 
 function getUpcomingTransportation() {
@@ -33,7 +43,7 @@ function getUpcomingTransportation() {
           {
             stop(id: "HSL:2632250") {
               name
-              stoptimesWithoutPatterns(numberOfDepartures: 16) {
+              stoptimesWithoutPatterns(numberOfDepartures: 24) {
                 scheduledArrival
                 realtimeArrival
                 arrivalDelay
