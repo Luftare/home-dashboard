@@ -151,7 +151,7 @@ export default class Calendar extends Component {
     return (
       <Container {...this.props}>
         <EventGroup>
-          <h3>
+          <h3 style={{ marginTop: 0 }}>
             Tänään{' '}
             <span style={{ fontSize: '30px', fontWeight: 500 }}>
               {weekDayName} {dayOfMonth}.{month}.

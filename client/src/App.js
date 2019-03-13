@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Calendar from './modules/calendar';
 import Weather from './modules/weather';
+import Transportation from './modules/transportation';
 
 const Container = styled.div`
   display: flex;
@@ -14,12 +15,21 @@ const Container = styled.div`
   padding: 64px;
   box-sizing: border-box;
 `;
+const Double = styled.div`
+  display: flex;
+  > * {
+    width: 50%;
+  }
+`;
 
 class App extends Component {
   render() {
     return (
       <Container>
-        <Calendar />
+        <Double>
+          <Calendar />
+          <Transportation />
+        </Double>
         <Weather />
       </Container>
     );

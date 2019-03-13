@@ -49,6 +49,8 @@ function getWeatherData() {
           const trimmedPercentage = percentage
             .split('&#xA0;')
             .join('')
+            .split('&gt;')
+            .join('')
             .split('&lt; ')
             .join('');
           weatherData[i].rainLikelihood = trimmedPercentage;

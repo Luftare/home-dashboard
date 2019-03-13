@@ -33,7 +33,7 @@ function getUpcomingTransportation() {
           {
             stop(id: "HSL:2632250") {
               name
-              stoptimesWithoutPatterns(numberOfDepartures: 8) {
+              stoptimesWithoutPatterns(numberOfDepartures: 16) {
                 scheduledArrival
                 realtimeArrival
                 arrivalDelay
@@ -55,7 +55,7 @@ function getUpcomingTransportation() {
             scheduledArrivalText: timestampToTimeString(entry.scheduledArrival),
             bussNumber: entry.trip.route.shortName,
             delayInSeconds: entry.arrivalDelay,
-            destination: entry.headsign
+            destination: entry.headsign.split('via')[0]
           };
         });
         resolvePromise(upcomingTransportation);
