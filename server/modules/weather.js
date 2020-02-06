@@ -18,7 +18,7 @@ function getWeatherData() {
     request(url, (err, res, body) => {
       if (err) console.log(err);
 
-      const $ = cheerio.load(base64ToString(body));
+      const $ = cheerio.load(body);
       const times = $('.meteogram-times').find('span');
       const temperatures = $('.meteogram-temperatures').find('div');
       const descriptions = $('.meteogram-weather-symbols').find('div');
