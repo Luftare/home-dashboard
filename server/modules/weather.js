@@ -1,69 +1,42 @@
-const request = require('request');
-const cheerio = require('cheerio');
+const fetch = require('node-fetch');
 
 const hourLimit = 11;
-const url = 'trohs=tsacerof?4A%3C%repnevr4A%3C%j/oopse/aas/if.sotialneeteitamli//:sptth'
-  .split('')
-  .reverse()
-  .join('');
+const url =
+  'https://www.ilmatieteenlaitos.fi/api/weather/forecasts?place=J%C3%A4rvenper%C3%A4&area=Espoo';
 
-function base64ToString(data) {
-  return new Buffer(data, 'base64').toString('ascii');
+function parseTime(str) {
+  const timeStr = str.split('T')[1];
+  const hours = timeStr.substr(0, 2);
+  const minutes = timeStr.substr(2, 2);
+  return `${hours}.${minutes}`;
+}
+
+function roundTens(value) {
+  const num = parseInt(value);
+  return Math.round(num / 10) * 10;
 }
 
 function getWeatherData() {
-  return new Promise(resolvePromise => {
-    const weatherData = [...Array(hourLimit)].map(() => ({}));
+  return new Promise((resolvePromise) => {
+    return fetch(url)
+      .then((data) => data.json())
+      .then((data) => {
+        const { symbolDescriptions, table } = data;
+        const forecasts = table.slice(0, hourLimit);
 
-    request(url, (err, res, body) => {
-      if (err) console.log(err);
+        const response = forecasts.map(
+          ({ PoP, Temperature, SmartSymbol, localtime }) => ({
+            time: parseTime(localtime),
+            temperature: `${Temperature}°C`,
+            rainLikelihood: `${roundTens(PoP)}%`,
+            description: symbolDescriptions.find(
+              (desc) => desc.id === SmartSymbol
+            ).text_fi,
+          })
+        );
 
-      const $ = cheerio.load(body);
-      const times = $('.meteogram-times').find('span');
-      const temperatures = $('.meteogram-temperatures').find('div');
-      const descriptions = $('.meteogram-weather-symbols').find('div');
-      const rainPercentages = $(
-        '.meteogram-probabilities-of-precipitation'
-      ).find('span');
-
-      times.each((i, el) => {
-        if (i < hourLimit) {
-          weatherData[i].time = $(el).html() + '.00';
-        }
+        resolvePromise(response);
       });
-
-      temperatures.each((i, el) => {
-        if (i < hourLimit) {
-          const rawText = $(el).html();
-          const temperature = rawText.split('&#xB0;').join('°C');
-          weatherData[i].temperature = temperature;
-        }
-      });
-
-      descriptions.each((i, el) => {
-        if (i < hourLimit) {
-          const description = $(el).attr('title');
-          const trimmedDescription = description.split(',')[0];
-          weatherData[i].description = trimmedDescription;
-        }
-      });
-
-      rainPercentages.each((i, el) => {
-        if (i < hourLimit) {
-          const percentage = $(el).html();
-          const trimmedPercentage = percentage
-            .split('&#xA0;')
-            .join('')
-            .split('&gt;')
-            .join('')
-            .split('&lt; ')
-            .join('');
-          weatherData[i].rainLikelihood = trimmedPercentage;
-        }
-      });
-
-      resolvePromise(weatherData);
-    });
   });
 }
 
