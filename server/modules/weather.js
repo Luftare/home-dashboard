@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const request = require('request');
 
 const hourLimit = 11;
 const url =
@@ -18,25 +18,24 @@ function roundTens(value) {
 
 function getWeatherData() {
   return new Promise((resolvePromise) => {
-    return fetch(url)
-      .then((data) => data.json())
-      .then((data) => {
-        const { symbolDescriptions, table } = data;
-        const forecasts = table.slice(0, hourLimit);
+    return request(url, { json: true }, (err, res, body) => {
+      if (err) console.log(err);
+      const { symbolDescriptions, table } = body;
+      const forecasts = table.slice(0, hourLimit);
 
-        const response = forecasts.map(
-          ({ PoP, Temperature, SmartSymbol, localtime }) => ({
-            time: parseTime(localtime),
-            temperature: `${Temperature}°C`,
-            rainLikelihood: `${roundTens(PoP)}%`,
-            description: symbolDescriptions.find(
-              (desc) => desc.id === SmartSymbol
-            ).text_fi,
-          })
-        );
+      const response = forecasts.map(
+        ({ PoP, Temperature, SmartSymbol, localtime }) => ({
+          time: parseTime(localtime),
+          temperature: `${Temperature}°C`,
+          rainLikelihood: `${roundTens(PoP)}%`,
+          description: symbolDescriptions.find(
+            (desc) => desc.id === SmartSymbol
+          ).text_fi,
+        })
+      );
 
-        resolvePromise(response);
-      });
+      resolvePromise(response);
+    });
   });
 }
 
