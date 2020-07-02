@@ -2,7 +2,7 @@ const request = require('request');
 
 const hourLimit = 11;
 const url =
-  'https://www.ilmatieteenlaitos.fi/api/weather/forecasts?place=J%C3%A4rvenper%C3%A4&area=Espoo';
+  'https://www.ilmatieteenlaitos.fi/api/weather/forecasts?place=j%C3%A4rvenper%C3%A4&area=espoo';
 
 function parseTime(str) {
   const timeStr = str.split('T')[1];
