@@ -23,16 +23,24 @@ function getWeatherData() {
       const { symbolDescriptions, table } = body;
       const forecasts = table.slice(0, hourLimit);
 
-      const response = forecasts.map(
+      const parsedForecasts = forecasts.map(
         ({ PoP, Temperature, SmartSymbol, localtime }) => ({
           time: parseTime(localtime),
           temperature: `${Temperature}°C`,
           rainLikelihood: `${roundTens(PoP)}%`,
-          description: symbolDescriptions.find(
-            (desc) => desc.id === SmartSymbol
-          ).text_fi,
+          description: symbolDescriptions
+            .find((desc) => desc.id === SmartSymbol)
+            .text_fi.split(',')[0]
+            .trim(),
         })
       );
+
+      const response = {
+        forecasts: parsedForecasts,
+        dayLength: body.dayLength.lengthofday,
+        sunrise: body.dayLength.sunrise,
+        sunset: body.dayLength.sunset,
+      };
 
       resolvePromise(response);
     });

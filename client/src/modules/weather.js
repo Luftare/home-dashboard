@@ -2,15 +2,26 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Module = styled.div`
-  margin: 0 -3%;
+  .day-length {
+    margin-bottom: 48px;
+
+    * {
+      font-size: 24px;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+  }
 
   table {
     width: 100%;
+    margin: 0 -3%;
     border-collapse: separate;
     border-spacing: 0 16px;
 
     td {
-      width: ${props =>
+      width: ${(props) =>
         props.forecastCount === 0 ? 1 : Math.floor(100 / props.forecastCount)}%;
       text-align: center;
     }
@@ -27,7 +38,10 @@ export default class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      forecasts: []
+      forecasts: [],
+      dayLength: '',
+      sunrise: '',
+      sunset: '',
     };
   }
 
@@ -43,9 +57,14 @@ export default class Weather extends Component {
 
   updateForecast() {
     fetch('http://127.0.0.1:9999/weather')
-      .then(data => data.json())
-      .then(forecasts => {
-        this.setState({ forecasts });
+      .then((data) => data.json())
+      .then((weather) => {
+        this.setState({
+          forecasts: weather.forecasts,
+          dayLength: weather.dayLength,
+          sunrise: weather.sunrise,
+          sunset: weather.sunset,
+        });
       });
   }
 
@@ -63,6 +82,15 @@ export default class Weather extends Component {
 
     return (
       <Module forecastCount={this.state.forecasts.length} {...this.props}>
+        <div className="day-length">
+          <div>
+            <span className="bold">{this.state.dayLength}</span>
+          </div>
+          <div style={{ marginTop: '8px' }}>
+            {this.state.sunrise} - {this.state.sunset}
+          </div>
+        </div>
+
         <table>
           {hasForecasts && (
             <tr>
