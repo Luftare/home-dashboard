@@ -20,8 +20,14 @@ function getWeatherData() {
   return new Promise((resolvePromise) => {
     return request(url, { json: true }, (err, res, body) => {
       if (err) console.log(err);
-      const { symbolDescriptions, table } = body;
-      const forecasts = table.slice(0, hourLimit);
+      const { symbolDescriptions, forecastValues } = body;
+      const forecasts = forecastValues.slice(0, hourLimit);
+
+      const todayForecast = forecastValues[0];
+      const todayDateString = todayForecast.localtime.split('T')[0];
+      const firstForecastOfTomorrow = forecastValues.find(f => f.localtime.split('T')[0] !== todayDateString) || todayForecast;
+
+      const dayLengthDifferenceTomorrow = firstForecastOfTomorrow.DayLength - todayForecast.DayLength;
 
       const parsedForecasts = forecasts.map(
         ({ PoP, Temperature, SmartSymbol, localtime }) => ({
@@ -40,6 +46,7 @@ function getWeatherData() {
         dayLength: body.dayLength.lengthofday,
         sunrise: body.dayLength.sunrise,
         sunset: body.dayLength.sunset,
+        dayLengthDifferenceTomorrow,
       };
 
       resolvePromise(response);

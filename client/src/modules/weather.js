@@ -42,6 +42,7 @@ export default class Weather extends Component {
       dayLength: '',
       sunrise: '',
       sunset: '',
+      dayLengthDifferenceTomorrow: 0,
     };
   }
 
@@ -60,10 +61,7 @@ export default class Weather extends Component {
       .then((data) => data.json())
       .then((weather) => {
         this.setState({
-          forecasts: weather.forecasts,
-          dayLength: weather.dayLength,
-          sunrise: weather.sunrise,
-          sunset: weather.sunset,
+          ...weather
         });
       });
   }
@@ -84,7 +82,7 @@ export default class Weather extends Component {
       <Module forecastCount={this.state.forecasts.length} {...this.props}>
         <div className="day-length">
           <div>
-            <span className="bold">{this.state.dayLength}</span>
+            <span className="bold">{this.state.dayLength},</span> <span>huomenna {`${this.state.dayLengthDifferenceTomorrow < 0 ? '' : '+'}${this.state.dayLengthDifferenceTomorrow}`} min</span>
           </div>
           <div style={{ marginTop: '8px' }}>
             {this.state.sunrise} - {this.state.sunset}
